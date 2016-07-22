@@ -1,9 +1,9 @@
-import re, urllib, sys, urllib2, threading, thread, os
+#!/usr/bin/env python
+# coding=utf-8
+import re, urllib, sys, urllib2, threading, thread, os, sys
 import time
 import socket
 
-
-# -*- coding: utf-8 -*-
 
 def get_html(url):
     try:
@@ -16,7 +16,7 @@ def get_html(url):
             'Referer': None}
         req = urllib2.Request(url, None, req_header)
         resp = urllib2.urlopen(req)
-        return resp.read()
+        return resp.read().decode('utf-8').encode()  # .decode('gbk').encode(type)
     except IOError:
         return ""
 
@@ -63,7 +63,11 @@ main_url = 'http://www.qisuu.com'
 root_url = main_url + '/soft'
 book_list = []
 socket.setdefaulttimeout(30.0)  # timeout
-print 'Scanning all websites...'
+
+type = sys.getfilesystemencoding()  # 关键
+# print content.decode("UTF-8").encode(type)  # 关键
+
+print 'Scanning websites...'
 for i in range(1, 2):
     for j in range(1, 3):
         if j == 1:
@@ -73,8 +77,15 @@ for i in range(1, 2):
         print url
         try:
             text = get_html(url)
-            print text
-            book_list = list(set(book_list).union(get_book_page(text)))
+            text = get_html(url)
+            print text  # .decode('utf8').encode(type)
+            book_page_list = get_book_page(text)
+            book_file_list = []
+            for book_page in book_page_list:
+                book_file = get_book_file(get_html(book_page))
+                print book_file
+                book_file.append(book_file)
+            book_list = list(set(book_list).union(set(book_file_list)))
         except IOError, e:
             print "Error %d: %s" % (e.args[0], e.args[1])
             break
