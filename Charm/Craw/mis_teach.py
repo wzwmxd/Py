@@ -26,7 +26,8 @@ response = urllib2.urlopen(req)
 compressedData = response.read()
 print 'Open http://mis.teach.ustc.edu.cn/init.do OK.'
 
-date = '1469152125415'
+# date = '1469152125415'
+date = '1469242601259'
 url = 'http://mis.teach.ustc.edu.cn/randomImage.do?date=%%27%s%%27' % date
 headers['Accept'] = '*/*'
 headers['Referer'] = 'http://mis.teach.ustc.edu.cn/userinit.do'
