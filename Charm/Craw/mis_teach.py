@@ -26,7 +26,8 @@ response = urllib2.urlopen(req)
 compressedData = response.read()
 print 'Open http://mis.teach.ustc.edu.cn/init.do OK.'
 
-date = '1469152125415'
+# date = '1469152125415'
+date = '1469242601259'
 url = 'http://mis.teach.ustc.edu.cn/randomImage.do?date=%%27%s%%27' % date
 headers['Accept'] = '*/*'
 headers['Referer'] = 'http://mis.teach.ustc.edu.cn/userinit.do'
@@ -72,5 +73,26 @@ response = urllib2.urlopen(req)
 url = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
 headers['Referer'] = 'http://mis.teach.ustc.edu.cn/init_st_xk.do'
 req = urllib2.Request(url, None, headers)
+response = urllib2.urlopen(req)
+# print response.read()
+
+
+
+url = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
+headers['Referer'] = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
+data = {
+    'kcmc': '',
+    'kkdw': '',
+    'qr_queryType': 'null',
+    'queryType': '4',
+    'rkjs': '',
+    'seldwdm': 'null',
+    'selkkdw': '',
+    'seyxn': '2016',
+    'seyxq': '1',
+    'sjpdmlist': '',
+    'xnxq': '20161'
+}
+req = urllib2.Request(url, urllib.urlencode(data), headers)
 response = urllib2.urlopen(req)
 print response.read()

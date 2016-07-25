@@ -9,10 +9,17 @@ from email.mime.multipart import MIMEMultipart
 
 mailInfo={
     "from":"wzwmxd@qq.com",
+<<<<<<< HEAD
     "to":"884015671@qq.com",
     "hostname":"smtp.qq.com",
     "username":"wzwmxd",
     "mailsubject":"MESSAGE FROM PARENTS",
+=======
+    "to":"wzwmxd@qq.com",
+    "hostname":"smtp.qq.com",
+    "username":"wzwmxd",
+    "mailsubject":"NEWS",
+>>>>>>> 65baaa96b18bddde7dbd516b2437b9cd684580ff
     "mailencoding":"utf-8"
 }
 if __name__=='__main__':

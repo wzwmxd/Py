@@ -16,7 +16,7 @@ def get_html(url):
             'Referer': None}
         req = urllib2.Request(url, None, req_header)
         resp = urllib2.urlopen(req)
-        return resp.read().decode('utf-8').encode()  # .decode('gbk').encode(type)
+        return resp.read()  # decode('utf-8').encode()  # .decode('gbk').encode(type)
     except IOError:
         return ""
 
@@ -89,56 +89,4 @@ for i in range(1, 2):
         except IOError, e:
             print "Error %d: %s" % (e.args[0], e.args[1])
             break
-'''
-for book in book_list:
-    print '-' * 60
-    print "book_name: ", book[5], "\nauthor: ", book[0], "\nsize: ", book[1], " MB", "\nstar: ", book[2], \
-        "\nbook_link: ", book[3], "\nimg_link: ", book[4]
-    download = get_book_file(get_html(main_url + book[3]))
-    print "file_link", download[1][1]
-    time.clock()
-    if not os.path.exists(save_dir):
-        os.mkdir(save_dir)
-    try:
-        filename = get_book_name(download[1][1])
-        if not os.path.exists(save_dir + filename):
-            urllib.urlretrieve(download[1][1], save_dir + filename, reporthook=download_report)
-            print " OK."
-        else:
-            print "File exists."
-    except:
-        try:
-            filename = get_book_name(download[1][2])
-            if not os.path.exists(save_dir + filename):
-                urllib.urlretrieve(download[1][2], save_dir + filename, reporthook=download_report)
-                print " OK."
-            else:
-                print "File exists."
-        except:
-            try:
-                filename = get_book_name(download[1][0])
-                if not os.path.exists(save_dir + filename):
-                    urllib.urlretrieve(download[1][0], save_dir + filename, reporthook=download_report)
-                    print " OK."
-                else:
-                    print "File exists."
-            except IOError, e:
-                print "Download faild %d: %s" % (e.args[0], e.args[1])
-                print save_dir + filename
-                continue
-    try:
-        info_file = open(save_dir + get_book_name(download[1][1]) + '_info.txt', 'w')
-        info_file.write(download[0][0])
-        info_file.close()
-    except:
-        pass
-'''
-download_file = open(save_dir + 'download.txt', 'w')
-print book_list
-for book in book_list:
-    print book
-    download = get_book_file(get_html(main_url + book[3]))
-    for file_link in download[1]:
-        print file_link
-        download_file.writelines(file_link)
-download_file.close()
+
