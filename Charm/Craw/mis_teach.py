@@ -74,4 +74,25 @@ url = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
 headers['Referer'] = 'http://mis.teach.ustc.edu.cn/init_st_xk.do'
 req = urllib2.Request(url, None, headers)
 response = urllib2.urlopen(req)
+# print response.read()
+
+
+
+url = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
+headers['Referer'] = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
+data = {
+    'kcmc': '',
+    'kkdw': '',
+    'qr_queryType': 'null',
+    'queryType': '4',
+    'rkjs': '',
+    'seldwdm': 'null',
+    'selkkdw': '',
+    'seyxn': '2016',
+    'seyxq': '1',
+    'sjpdmlist': '',
+    'xnxq': '20161'
+}
+req = urllib2.Request(url, urllib.urlencode(data), headers)
+response = urllib2.urlopen(req)
 print response.read()

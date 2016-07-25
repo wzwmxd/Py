@@ -1,7 +1,6 @@
 from __future__ import print_function
 import sys, os
 from PIL import Image
-# import ImageEnhance, ImageFilter
 import math
 
 
@@ -83,14 +82,14 @@ def dist(x, y):
 
 
 image_path = '/home/kyo/Touro/Pictures/Random_Image/'
-for i in range(130):
+for i in range(int(raw_input("Input numbers of images:"))):
     image = Image.open(image_path + '%d.jpg' % i)
     image = image.convert('RGBA')
     image_filter(image)
     cut(image, '%d.jpg' % i, image_path)
     sys.stdout.flush()
     print("\rCutting image %d ..." % i, end='')
-print('OK.')
+print(' OK.')
 '''
 mean_list = []
 var_list = []

@@ -8,11 +8,11 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 mailInfo={
-    "from":"884015671@qq.com",
-    "to":"884015671@qq.com",
+    "from":"wzwmxd@qq.com",
+    "to":"wzwmxd@qq.com",
     "hostname":"smtp.qq.com",
-    "username":"884015671",
-    "mailsubject":"MESSAGE FROM PARENTS",
+    "username":"wzwmxd",
+    "mailsubject":"NEWS",
     "mailencoding":"utf-8"
 }
 if __name__=='__main__':
