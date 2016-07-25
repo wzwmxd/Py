@@ -37,7 +37,7 @@ for j in range(1000):
     for i in range(1000):
         response = urllib2.urlopen(req)
         compressedData = response.read()
-        f = open('/home/kyo/C/Random_Img/%d.jpg' % (i + j * 1000), 'w')
+        f = open('/home/pi/Turbo/Pictures/Random_Image/%d.jpg' % (i + j * 1000), 'w')
         print >> f, compressedData
         f.close()
         sys.stdout.flush()
