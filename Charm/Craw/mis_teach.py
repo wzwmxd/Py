@@ -1,4 +1,30 @@
-import urllib2, urllib, cookielib
+# -*- coding: utf-8 -*-
+
+import urllib2, urllib, cookielib, re
+
+
+def get_course(course_html):
+    course1 = r'<td.+?>[\r\n\t ]*' + \
+              r'<a.+?>[\r\n\t ]*' + \
+              r'<font.+?>(.+?)</font>[\r\n\t ]*' + \
+              r'</a>[\r\n\t ]*.+?</td>[\r\n\t ]*'
+    course2 = r'<td.+?>[\r\n\t ]*.+?</td>[\r\n\t ]*'
+    course_exp1 = r'<td.+?>[\r\n\t ]*' + \
+                  r'(\d+?)[\r\n\t ]*</td>[\r\n\t ]*' + \
+                  r'<td.+?>[\r\n\t ]*([\d\w]+?)[\r\n\t ]*</td>[\r\n\t ]*' + \
+                  r'<td.+?>[\r\n\t ]*<a.+?>[\r\n\t ]*' + \
+                  r'<font.+?>(.+?)</font>[\r\n\t ]*' + \
+                  r'</a>[\r\n\t ]*</td>[\r\n\t ]*'
+    course_exp2 = r'<td.+?>(.+?)</td>[\r\n\t ]*' + \
+                  r'<td.+?>(.+?)</td>[\r\n\t ]*' + \
+                  r'<td.+?>(.+?)</td>[\r\n\t ]*' + \
+                  r'<td.+?>(.+?)</td>[\r\n\t ]*' + \
+                  r'<td.+?>[\r\n\t ]*([\d/]+?)[\r\n\t ]*</td>[\r\n\t ]*' + \
+                  r'<td.+?>[\r\n\t ]*(.+?)[\r\n\t ]*</td>[\r\n\t ]*'
+    course_reg1 = re.compile(course_exp1 + course1 + course_exp2)
+    course_reg2 = re.compile(course_exp1 + course2 + course_exp2)
+    return course_reg1.findall(course_html) + course_reg2.findall(course_html)
+
 
 url = 'http://mis.teach.ustc.edu.cn'
 headers = {
@@ -42,8 +68,15 @@ f.close()
 print 'Get random_img OK.'
 
 url = 'http://mis.teach.ustc.edu.cn/login.do'
-data = {'check': '8547', 'passWord': '4181456184', 'userCode': 'PB13001037', 'userbz': 's'}
-data['check'] = raw_input('Please input check_code:')
+data = {
+    'check': '8547',
+    'passWord': '',
+    'userCode': '',
+    'userbz': 's'
+}
+data['check'] = ''  # raw_input('Please input check_code:')
+data['passWord'] = raw_input('Password: ')
+data['userCode'] = raw_input('Username: ')
 data = urllib.urlencode(data)
 req = urllib2.Request(url, data, headers)
 response = urllib2.urlopen(req)
@@ -76,15 +109,13 @@ req = urllib2.Request(url, None, headers)
 response = urllib2.urlopen(req)
 # print response.read()
 
-
-
 url = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
 headers['Referer'] = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
 data = {
     'kcmc': '',
     'kkdw': '',
     'qr_queryType': 'null',
-    'queryType': '4',
+    'queryType': '2',
     'rkjs': '',
     'seldwdm': 'null',
     'selkkdw': '',
@@ -95,4 +126,11 @@ data = {
 }
 req = urllib2.Request(url, urllib.urlencode(data), headers)
 response = urllib2.urlopen(req)
-print response.read()
+course_html = response.read().decode('GBK').encode('utf-8')
+# print course_html
+course_list = get_course(course_html)
+# print course_list
+for elem in course_list:
+    for i in range(len(elem)):
+        print elem[i],
+    print '\n'
