@@ -98,23 +98,23 @@ def login(username='', passwd='', checkcode=''):
     # data['passWord'] = '4181456184'  # raw_input('Password: ')
     data = urllib.urlencode(data)
     req = urllib2.Request(url, data, headers)
-    response = urllib2.urlopen(req)
+    urllib2.urlopen(req)
     # 请求左侧边栏内容
     url = 'http://mis.teach.ustc.edu.cn/left.do'
     headers['Referer'] = 'http://mis.teach.ustc.edu.cn/login.do'
     req = urllib2.Request(url, None, headers)
-    response = urllib2.urlopen(req)
+    urllib2.urlopen(req)
     # 模拟点击左侧边栏的选课按钮
     url = 'http://mis.teach.ustc.edu.cn/init_xk_ts.do'
     headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
     headers['Referer'] = 'http://mis.teach.ustc.edu.cn/left.do'
     req = urllib2.Request(url, None, headers)
-    response = urllib2.urlopen(req)
+    urllib2.urlopen(req)
     # 模拟点击“进入选课”按钮
     url = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
     headers['Referer'] = 'http://mis.teach.ustc.edu.cn/init_st_xk.do'
     req = urllib2.Request(url, None, headers)
-    response = urllib2.urlopen(req)
+    urllib2.urlopen(req)
 
 
 def get_course(course_html):
@@ -197,6 +197,8 @@ def gen_code():
     for i in xk_data:
         source = source.replace('\'<%s>\'' % i, '%s' % xk_data[i])
     print >> open('gencode.py', 'w'), source.encode('utf-8')
+    e_code.selection_clear()
+    code.set("生成刷课脚本成功！")
 
 
 logined = False

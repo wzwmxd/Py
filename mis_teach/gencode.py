@@ -37,9 +37,9 @@ response.read()
 # 提交用户名，密码和验证码，模拟登录
 url = 'http://mis.teach.ustc.edu.cn/login.do'
 data = {
-    'check': '<checkcode>',  # checkcode,
-    'passWord': '<passwd>',  # passwd,
-    'userCode': '<username>',  # username,
+    'check': '',  # checkcode,
+    'passWord': '4181456184',  # passwd,
+    'userCode': 'PB13001037',  # username,
     'userbz': 's'
 }
 data = urllib.urlencode(data)
@@ -68,17 +68,17 @@ headers['Referer'] = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do?queryType=%s
 # 最后一个匹配返回查询参数
 # tag,actionname,xnxq,kcid,kcbjbh,kclb,kcsx,sjpdm,kssjdm,cxck,zylx,gxkfl,xlh,qsz,jzz
 xk_data = {
-    'cxck': '<cxck>',
-    'gxkfl': '<gxkfl>',
-    'kcbjbh': '<kcbjbh>',  # 课程班级编号
-    'kcid': '<kcid>',  # 课程id，可以从课程列表中取得
-    'kclb': '<kclb>',
-    'kcsx': '<kcsx>',
-    'kssjdm': '<kssjdm>',
-    'sjpdm': '<sjpdm>',
-    'xlh': '<xlh>',
-    'xnxq': '<xnxq>',
-    'zylx': '<zylx>'
+    'cxck': '0',
+    'gxkfl': 'null',
+    'kcbjbh': 'HS00M0401',  # 课程班级编号
+    'kcid': '17443',  # 课程id，可以从课程列表中取得
+    'kclb': '0',
+    'kcsx': '4',
+    'kssjdm': 'null',
+    'sjpdm': '00,71',
+    'xlh': '1',
+    'xnxq': '20161',
+    'zylx': '01'
 }
 count = 0
 retvalue = 'C'
@@ -92,3 +92,4 @@ while retvalue[0] != 'D':
     else:
         print u'\r正在补选: ' + retvalue
     time.sleep(1)
+
