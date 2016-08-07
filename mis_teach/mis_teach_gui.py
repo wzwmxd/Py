@@ -65,7 +65,7 @@ def get_cookie(checklabel):
     data = urllib.urlencode(data)
     req = urllib2.Request(url, data, headers)
     response = urllib2.urlopen(req)
-    compressedData = response.read()
+    response.read()
     # 尚不清楚date的用处，但是可以一直使用如下值
     date = '1469242601259'
     url = 'http://mis.teach.ustc.edu.cn/randomImage.do?date=%%27%s%%27' % date
@@ -94,8 +94,8 @@ def login(username='', passwd='', checkcode=''):
         'userbz': 's'
     }
     # data['check'] = ''  # raw_input('Please input check_code:')
-    # data['userCode'] = 'PB13001037'  # raw_input('Username: ')
-    # data['passWord'] = '4181456184'  # raw_input('Password: ')
+    # data['userCode'] = ''  # raw_input('Username: ')
+    # data['passWord'] = ''  # raw_input('Password: ')
     data = urllib.urlencode(data)
     req = urllib2.Request(url, data, headers)
     urllib2.urlopen(req)

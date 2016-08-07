@@ -91,4 +91,4 @@ while retvalue[0] != 'D':
         break
     else:
         print u'\r正在补选: ' + retvalue
-    time.sleep(1)
+    time.sleep(0.5)
