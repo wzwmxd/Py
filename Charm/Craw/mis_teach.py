@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import urllib2, urllib, cookielib, re
+import urllib2, urllib, cookielib, re, Image
 
 
 def get_course(course_html):
@@ -20,12 +20,15 @@ def get_course(course_html):
                   r'<td.+?>(.+?)</td>[\r\n\t ]*' + \
                   r'<td.+?>(.+?)</td>[\r\n\t ]*' + \
                   r'<td.+?>[\r\n\t ]*([\d/]+?)[\r\n\t ]*</td>[\r\n\t ]*' + \
-                  r'<td.+?>[\r\n\t ]*(.+?)[\r\n\t ]*</td>[\r\n\t ]*'
+                  r'<td.+?>[\r\n\t ]*(.+?)[\r\n\t ]*</td>[\r\n\t ]*' + \
+                  r'<td.+?>[\r\n\t ]*.+?[\r\n\t ]*' + \
+                  r'<input'
     course_reg1 = re.compile(course_exp1 + course1 + course_exp2)
     course_reg2 = re.compile(course_exp1 + course2 + course_exp2)
     return course_reg1.findall(course_html) + course_reg2.findall(course_html)
 
 
+# 进入主页，模拟 Ubuntu 16.04 + Firefox 47.0 登录，并获取 Cookie
 url = 'http://mis.teach.ustc.edu.cn'
 headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -41,7 +44,7 @@ opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 req = urllib2.Request(url, None, headers)
 response = urllib2.urlopen(req)
 jsessionid = response.info().getheader('Set-Cookie')
-print 'Get cookie OK: ', jsessionid
+print 'Get cookie successfully: ', jsessionid
 
 headers['Cookie'] = jsessionid
 headers['Referer'] = 'http://mis.teach.ustc.edu.cn/'
@@ -50,9 +53,8 @@ data = urllib.urlencode(data)
 req = urllib2.Request(url, data, headers)
 response = urllib2.urlopen(req)
 compressedData = response.read()
-print 'Open http://mis.teach.ustc.edu.cn/init.do OK.'
-
-# date = '1469152125415'
+print 'Open http://mis.teach.ustc.edu.cn/init.do.'
+# 尚不清楚date的用处，但是可以一直使用如下值
 date = '1469242601259'
 url = 'http://mis.teach.ustc.edu.cn/randomImage.do?date=%%27%s%%27' % date
 headers['Accept'] = '*/*'
@@ -62,11 +64,12 @@ data = urllib.urlencode(data)
 req = urllib2.Request(url, data, headers)
 response = urllib2.urlopen(req)
 compressedData = response.read()
-f = open('/home/kyo/random_img_file.jpg', 'w')
+f = open('/home/kyo/random_img_file.jpg', 'w')  # 保存验证码图片的路径，最近的教务系统取消了验证码
 print >> f, compressedData
 f.close()
-print 'Get random_img OK.'
+print 'Get random_img successfully.'
 
+# 提交用户名，密码和验证码，模拟登录
 url = 'http://mis.teach.ustc.edu.cn/login.do'
 data = {
     'check': '8547',
@@ -75,12 +78,11 @@ data = {
     'userbz': 's'
 }
 data['check'] = ''  # raw_input('Please input check_code:')
-data['passWord'] = raw_input('Password: ')
-data['userCode'] = raw_input('Username: ')
+data['userCode'] = 'PB13001037'  # raw_input('Username: ')
+data['passWord'] = '4181456184'  # raw_input('Password: ')
 data = urllib.urlencode(data)
 req = urllib2.Request(url, data, headers)
 response = urllib2.urlopen(req)
-# compressedData = response.read()
 
 print 'Login successfully, get info...'
 '''
@@ -90,46 +92,42 @@ req = urllib2.Request(url, None, headers)
 response = urllib2.urlopen(req)
 compressedData = response.read()
 '''
+# 请求左侧边栏内容
 url = 'http://mis.teach.ustc.edu.cn/left.do'
 headers['Referer'] = 'http://mis.teach.ustc.edu.cn/login.do'
 req = urllib2.Request(url, None, headers)
 response = urllib2.urlopen(req)
-# compressedData = response.read()
-# print compressedData
-
+# 模拟点击左侧边栏的选课按钮
 url = 'http://mis.teach.ustc.edu.cn/init_xk_ts.do'
 headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
 headers['Referer'] = 'http://mis.teach.ustc.edu.cn/left.do'
 req = urllib2.Request(url, None, headers)
 response = urllib2.urlopen(req)
-
+# 模拟点击“进入选课”按钮
 url = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
 headers['Referer'] = 'http://mis.teach.ustc.edu.cn/init_st_xk.do'
 req = urllib2.Request(url, None, headers)
 response = urllib2.urlopen(req)
-# print response.read()
-
+# 开始选课
 url = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
 headers['Referer'] = 'http://mis.teach.ustc.edu.cn/init_st_xk_dx.do'
 data = {
     'kcmc': '',
     'kkdw': '',
     'qr_queryType': 'null',
-    'queryType': '2',
+    'queryType': raw_input("1.计划内课程    2.自由选修    4.公选课    5.体育选课    6.英语选课\n选课类型："),
     'rkjs': '',
     'seldwdm': 'null',
     'selkkdw': '',
-    'seyxn': '2016',
-    'seyxq': '1',
+    'seyxn': '2016',  # 学年
+    'seyxq': '1',  # 学期
     'sjpdmlist': '',
-    'xnxq': '20161'
+    'xnxq': '20161'  # 学期 + 学年
 }
 req = urllib2.Request(url, urllib.urlencode(data), headers)
 response = urllib2.urlopen(req)
 course_html = response.read().decode('GBK').encode('utf-8')
-# print course_html
 course_list = get_course(course_html)
-# print course_list
 for elem in course_list:
     for i in range(len(elem)):
         print elem[i],
