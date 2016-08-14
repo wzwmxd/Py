@@ -78,8 +78,8 @@ data = {
     'userbz': 's'
 }
 data['check'] = ''  # raw_input('Please input check_code:')
-data['userCode'] = 'PB13001037'  # raw_input('Username: ')
-data['passWord'] = '4181456184'  # raw_input('Password: ')
+data['userCode'] = ''  # raw_input('Username: ')
+data['passWord'] = ''  # raw_input('Password: ')
 data = urllib.urlencode(data)
 req = urllib2.Request(url, data, headers)
 response = urllib2.urlopen(req)
