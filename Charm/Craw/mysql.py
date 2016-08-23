@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sqlite3
 
-conn = sqlite3.connect('/home/kyo/weather.db')
+conn = sqlite3.connect('weather.db')
 cur = conn.cursor()
 try:
     cur.execute(

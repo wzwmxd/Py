@@ -3,6 +3,9 @@
 import urllib2, urllib, cookielib, re, Image
 
 
+# 模拟登陆教务系统mis.teach.ustc.edu.cn打印选课
+
+
 def get_course(course_html):
     course1 = r'<td.+?>[\r\n\t ]*' + \
               r'<a.+?>[\r\n\t ]*' + \
@@ -64,7 +67,7 @@ data = urllib.urlencode(data)
 req = urllib2.Request(url, data, headers)
 response = urllib2.urlopen(req)
 compressedData = response.read()
-f = open('/home/kyo/random_img_file.jpg', 'w')  # 保存验证码图片的路径，最近的教务系统取消了验证码
+f = open('random_img_file.jpg', 'w')  # 保存验证码图片的路径，最近的教务系统取消了验证码
 print >> f, compressedData
 f.close()
 print 'Get random_img successfully.'
@@ -78,8 +81,8 @@ data = {
     'userbz': 's'
 }
 data['check'] = ''  # raw_input('Please input check_code:')
-data['userCode'] = ''  # raw_input('Username: ')
-data['passWord'] = ''  # raw_input('Password: ')
+data['userCode'] = raw_input('Username: ')
+data['passWord'] = raw_input('Password: ')
 data = urllib.urlencode(data)
 req = urllib2.Request(url, data, headers)
 response = urllib2.urlopen(req)

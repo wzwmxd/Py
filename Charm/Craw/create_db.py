@@ -2,6 +2,7 @@
 
 import sqlite3
 
+# 创建数据库demo
 conn = sqlite3.connect('test.db')
 print "Opened database successfully";
 

@@ -2,6 +2,7 @@
 
 import urllib2, urllib, cookielib, re, Image
 
+# 查询6级英语成绩
 ustc1 = '340011'
 ustc1 = '340012'
 TimeType = '1622'

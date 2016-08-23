@@ -2,6 +2,8 @@
 import urllib2, re
 
 
+# 本程序通过查询查询ip138.com网站，解析网页内容来获取ip
+
 def get_html(url):
     try:
         req_header = {
@@ -27,7 +29,5 @@ def get_ip_ip138():
     return reg.findall(html)[0]
 
 
-'''
 if __name__ == '__main__':
-    print get_ip_ip138()[0][0],get_ip_ip138()[0][1]
-'''
+    print get_ip_ip138()[0]
